@@ -1,0 +1,32 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="count-up-import.html">
+<!--
+`<count-up>` description.
+
+Example:
+
+```html
+<count-up></count-up>
+```
+
+## Styling
+
+The following custom properties and mixins are available for styling:
+
+| Custom property | Description     | Default        |
+|:----------------|:----------------|:--------------:|
+| --count-up  | Mixin applied to :host     | {}  |
+
+@demo demo/index.html
+-->
+<dom-module id="count-up">
+  <template>
+    <style>
+      :host { display: inline-block; }
+      :host([hidden]) { display: none; }
+      #value { @apply --count-up-value; }
+    </style>
+    <div id="value">[[value]]</div>
+  </template>
+  <script src="count-up.js"></script>
+</dom-module>
