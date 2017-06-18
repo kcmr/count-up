@@ -32,13 +32,18 @@
       noGrouping: {
         type: Boolean,
         value: false
-      }
+      },
+
+      separator: String,
+      decimal: String
     },
 
     _countup: function(from, to) {
       return new CountUp(this.$.value, from, to, this.decimals, this.duration, {
         useEasing: !this.noEasing,
-        useGrouping: !this.noGrouping
+        useGrouping: !this.noGrouping,
+        separator: this.separator,
+        decimals: this.decimal
       });
     },
 
@@ -47,8 +52,20 @@
         previousValue = 0;
       }
 
-      var countup = this._countup(previousValue, value);
-      countup.start();
+      this.countup = this._countup(Number(previousValue), Number(value));
+      this.start();
+    }
+
+    start: function() {
+      this.countup.start();
+    },
+
+    reset: function() {
+      this.countup.reset();
+    },
+
+    update: function() {
+      this.countup.update();
     }
   });
 
