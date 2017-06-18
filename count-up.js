@@ -56,16 +56,16 @@
       this.start();
     },
 
-    start: function() {
-      this.countup.start();
+    start: function(cb) {
+      this.countup.start(cb);
     },
 
     reset: function() {
       this.countup.reset();
     },
 
-    update: function() {
-      this.countup.update();
+    update: function(value) {
+      this.countup.update(value);
     }
   });
 
