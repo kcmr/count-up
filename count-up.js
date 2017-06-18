@@ -54,7 +54,7 @@
 
       this.countup = this._countup(Number(previousValue), Number(value));
       this.start();
-    }
+    },
 
     start: function() {
       this.countup.start();
