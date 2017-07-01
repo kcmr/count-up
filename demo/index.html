@@ -21,6 +21,10 @@
         <count-up id="ui" value="100"></count-up>
       </div>
       <button on-click="changeValue">Change value</button>
+      <button onclick="document.getElementById('ui').start();">Start</button>
+      <button onclick="document.getElementById('ui').reset();">Reset</button>
+      <button onclick="document.getElementById('ui').update(210);">Update</button>
+      <button onclick="document.getElementById('ui').pauseResume();">pauseResume</button>
     </template>
     <script>
       (function(demo) {
