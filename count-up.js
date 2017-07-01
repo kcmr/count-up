@@ -79,6 +79,10 @@
       this._countup.update(value);
     },
 
+    pauseResume: function() {
+      this._countup.pauseResume();
+    },
+
     _updateCountUp: function(value, previousValue) {
       if (previousValue !== undefined) {
         setTimeout(() => {
