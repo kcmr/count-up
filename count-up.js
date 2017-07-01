@@ -32,10 +32,7 @@
         value: false
       },
 
-      easingFn: {
-        type: Function,
-        value: null
-      },
+      easingFn: Function,
 
       noGrouping: {
         type: Boolean,
@@ -61,7 +58,7 @@
     _setCountUp: function(value, previousValue, decimals, duration) {
       return new CountUp(this.$.value, Number(previousValue), Number(value), decimals, duration, {
         useEasing: !this.noEasing,
-        easingFn: this.easingFn,
+        easingFn: this.easingFn || null,
         useGrouping: !this.noGrouping,
         separator: this.separator,
         decimal: this.decimal
