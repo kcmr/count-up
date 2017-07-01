@@ -49,6 +49,10 @@
         value: '.'
       },
 
+      prefix: String,
+
+      suffix: String,
+
       _countup: {
         type: Function,
         computed: '_setCountUp(value, _previousValue, decimals, duration)'
@@ -61,7 +65,9 @@
         easingFn: this.easingFn || null,
         useGrouping: !this.noGrouping,
         separator: this.separator,
-        decimal: this.decimal
+        decimal: this.decimal,
+        prefix: this.prefix || null,
+        suffix: this.suffix || null
       });
     },
 
