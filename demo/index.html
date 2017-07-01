@@ -1,37 +1,41 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-    <title>Demo count-up</title>
-    <script>
-      window.Polymer = {
-        dom: 'shadow',
-        lazyRegister: true,
-        useNativeCSSProperties: true
-      };
-    </script>
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../count-up.html">
-    <link rel="import" href="css/demo-styles.html">
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <title>Demo count-up</title>
+  <script>
+    window.Polymer = {
+      dom: 'shadow',
+      lazyRegister: true,
+      useNativeCSSProperties: true
+    };
+  </script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../count-up.html">
+  <link rel="import" href="css/demo-styles.html">
+</head>
+<body>
+  <div class="wrapper">
     <template is="dom-bind" id="demo">
-      <div>
+      <div class="center">
         <count-up id="ui" value="100"></count-up>
       </div>
-      <button on-click="changeValue">Change value</button>
-      <button onclick="document.getElementById('ui').start();">Start</button>
-      <button onclick="document.getElementById('ui').reset();">Reset</button>
-      <button onclick="document.getElementById('ui').update(210);">Update</button>
-      <button onclick="document.getElementById('ui').pauseResume();">pauseResume</button>
+      <div class="center">
+        <button on-click="changeValue">Change value</button>
+        <button onclick="document.getElementById('ui').start();">Start</button>
+        <button onclick="document.getElementById('ui').reset();">Reset</button>
+        <button onclick="document.getElementById('ui').update(210);">Update</button>
+        <button onclick="document.getElementById('ui').pauseResume();">pauseResume</button>
+      </div>
     </template>
     <script>
       (function(demo) {
-        demo.changeValue = function() {
+        demo.changeValue = function () {
           demo.$.ui.value = Math.floor(Math.random() * 400) + 1;
         };
       }(document.getElementById('demo')));
     </script>
-  </body>
+  </div>
+</body>
 </html>
