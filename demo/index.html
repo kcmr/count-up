@@ -15,12 +15,10 @@
   <link rel="import" href="../../github-corner/github-corner.html">
   <link rel="import" href="../../paper-toast/paper-toast.html">
   <link rel="import" href="../count-up.html">
-  <link rel="import" href="tool-tip.html">
   <link rel="import" href="css/demo-styles.html">
 </head>
 <body>
-  <github-corner href="https://github.com/kcmr/count-up" id="docs"></github-corner>
-  <tool-tip target="docs" position="bottom">Check out the docs in Github</tool-tip>
+  <github-corner href="https://github.com/kcmr/count-up"></github-corner>
 
   <div class="wrapper">
     <h1 class="title">&lt;count-up&gt;</h1>
@@ -74,9 +72,8 @@
 
         <div class="check-field">
           <input type="checkbox" id="restart" checked="{{restartOnChange::change}}">
-          <label for="restart">Restart on change (<abbr title="What is this?" id="help">?</abbr>)</label>
+          <label for="restart">Restart on change</label>
         </div>
-        <tool-tip target="help" position="top" class="small">By default the animation only starts when endValue changes. Setting restartOnOptionsChanged to true starts the animation when any of the configuration properties change.</tool-tip>
 
         <div class="check-field">
           <input type="checkbox" id="grouping" checked="{{useGrouping::change}}">
