@@ -18,16 +18,52 @@
   </test-fixture>
 
   <script>
-    suite('<count-up> tag', function() {
+    suite('<count-up>', function() {
       var el;
+      var value;
 
       setup(function() {
         el = fixture('default');
+        value = el.$.value;
+        el.duration = 0.1;
       });
 
-      test('...');
+      test('setting endValue starts the count-up', function() {
+        sinon.spy(el, 'start');
+        el.endValue = 100;
+        assert.isTrue(el.start.calledOnce);
+      });
+
+      test('setting endValue displays the endValue after the count-up duration', function(done) {
+        el.noAutostart = true;
+        el.endValue = 100;
+        el.start(function() {
+          assert.equal(value.innerHTML, el.endValue);
+          done();
+        });
+      });
+
+      test('setting endValue should not display the endValue with noAutostart set to true', function() {
+        el.noAutostart = true;
+        el.endValue = 100;
+        var spy = sinon.spy(el, 'start');
+        assert.isFalse(spy.called);
+      });
+
+      suite('CountUp methods', function() {
+        setup(function() {
+          el.endValue = 100;
+        });
+
+        test('component methods call CountUp methods', function() {
+          ['start', 'reset', 'update', 'pauseResume'].forEach(function(method) {
+            el._countup[method] = sinon.spy();
+            el[method]();
+            assert.isTrue(el._countup[method].calledOnce, `component ${method} calls CountUp ${method}`);
+          });
+        });
+      });
     });
   </script>
 </body>
-
 </html>
