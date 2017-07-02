@@ -80,7 +80,7 @@
       },
 
       /**
-       * Disable grouping by thousands, hundreds, etc.
+       * Disable grouping by hundreds.
        */
       noGrouping: {
         type: Boolean,
@@ -89,7 +89,7 @@
       },
 
       /**
-       * Separator for groups (thousands).
+       * Separator for groups (hundreds).
        */
       separator: {
         type: String,
@@ -121,7 +121,7 @@
       },
 
       /**
-       * Set to true to restart the animation when a configuration property is changed.
+       * Set to true to restart the animation when a property is changed.
        * By default, only changing the endValue will animate the counter if noAutostart is not set to true.
        */
       restartOnOptionsChanged: {
@@ -188,7 +188,7 @@
 
     /**
      * Update the counter to a new value.
-     * @param  {Number} value New value.
+     * @param {Number} value New value.
      */
     update: function(value) {
       this._countup.update(value);
@@ -223,9 +223,7 @@
 
     _optionChanged: function(value, previousValue) {
       if (previousValue !== undefined) {
-        setTimeout(() => {
-          this.update(this.endValue); // reevaluate decimals
-        }, 1);
+        setTimeout(() => this.update(this.endValue), 1);
       }
     }
   });
