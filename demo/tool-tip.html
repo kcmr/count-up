@@ -1,0 +1,97 @@
+<dom-module id="tool-tip">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: absolute;
+        visibility: hidden;
+        top: var(--tool-tip-top, 0);
+        left: var(--tool-tip-left, 0);
+      }
+      :host([hidden]) { display: none; }
+      :host(.visible) {
+        visibility: visible;
+      }
+    </style>
+    <slot></slot>
+  </template>
+  <script>
+    Polymer({
+      is: 'tool-tip',
+      properties: {
+        /**
+         * Position the tooltip to the top, right, bottom or left of its target.
+         */
+        position: {
+          type: String,
+          value: 'top'
+        },
+
+        /**
+         * ID of the target element.
+         */
+        target: {
+          type: String
+        },
+
+        /**
+         * Offset top.
+         */
+        offset: {
+          type: Number,
+          value: 20
+        },
+
+        _target: {
+          type: Element,
+          observer: '_addListeners',
+          computed: '_findTarget(target)'
+        }
+      },
+
+      attached: function() {
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._dimensions = this.getBoundingClientRect();
+        });
+      },
+
+      _findTarget: function(target) {
+        var ownerRoot = Polymer.dom(this).getOwnerRoot();
+        var parentNode = Polymer.dom(this).parentNode;
+        return Polymer.dom(ownerRoot).querySelector(`#${target}`) || parentNode.querySelector(`#${target}`);
+      },
+
+      _addListeners: function(target) {
+        if (target) {
+          this.listen(target, 'mousemove', 'show');
+          this.listen(target, 'mouseleave', 'hide');
+        }
+      },
+
+      show: function(e) {
+        this._move(e);
+        this.classList.add('visible');
+      },
+
+      hide: function(e) {
+        this.debounce('hide-tooltip', function() {
+          this.classList.remove('visible');
+        }, 100);
+      },
+
+      _move: function({clientX, clientY}) {
+        var left = clientX - parseInt(this._dimensions.width);
+        var top;
+        if (this.position === 'bottom') {
+          top = clientY + this.offset;
+        } else if (this.position === 'top') {
+          top = clientY - this.offset - parseInt(this._dimensions.height);
+          left = clientX - parseInt(this._dimensions.width) / 2;
+        }
+        this.customStyle['--tool-tip-top'] = `${top}px`;
+        this.customStyle['--tool-tip-left'] = `${left}px`;
+        this.updateStyles();
+      }
+    });
+  </script>
+</dom-module>

@@ -41,9 +41,13 @@
     left: 0;
   }
 
+  input[disabled] {
+    opacity: 0.5;
+  }
+
   .wrapper {
     text-align: center;
-    margin: 74px auto;
+    margin: 45px auto 0;
   }
 
   .title {
@@ -78,6 +82,10 @@
     margin: 0 5px 20px;
   }
 
+  .field:last-child {
+    margin-bottom: 0;
+  }
+
   .field label {
     display: block;
   }
@@ -103,6 +111,38 @@
     background-color: #646b7b;
     border-color: var(--accent-color);
     box-shadow: none;
+  }
+
+  .check-field input {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .check-field label::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background-color: #4e5461;
+    border: 1px solid var(--background-color);
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px 4px 0;
+    border-radius: 2px;
+    line-height: 1.2;
+    transition: background-color 0.2s, border-color 0.6s;
+  }
+
+  .check-field input:checked ~ label::before {
+    content: "✓";
+    color: #fff;
+    background-color: #646b7b;
+    border-color: var(--accent-color);
   }
 
   .btn {
@@ -139,13 +179,26 @@
     color: var(--accent-color);
   }
 
+  tool-tip {
+    background-color: rgba(0,0,0,0.8);
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-align: left;
+  }
+
+  .small {
+    max-width: 500px;
+  }
+
   @media (min-width: 48em) {
     body { margin: 0; }
     .options {
       padding: 0;
       flex-wrap: nowrap;
     }
-    .field {
+    .field,
+    .check-field {
       flex: 0 1 auto;
       margin: 0 10px 0;
     }

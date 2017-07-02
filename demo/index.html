@@ -15,10 +15,13 @@
   <link rel="import" href="../../github-corner/github-corner.html">
   <link rel="import" href="../../paper-toast/paper-toast.html">
   <link rel="import" href="../count-up.html">
+  <link rel="import" href="tool-tip.html">
   <link rel="import" href="css/demo-styles.html">
 </head>
 <body>
-  <github-corner href="https://github.com/kcmr/count-up"></github-corner>
+  <github-corner href="https://github.com/kcmr/count-up" id="docs"></github-corner>
+  <tool-tip target="docs" position="bottom">Check out the docs in Github</tool-tip>
+
   <div class="wrapper">
     <h1 class="title">&lt;count-up&gt;</h1>
     <div class="desc">
@@ -32,18 +35,19 @@
         duration="[[duration]]"
         prefix="[[prefix]]"
         suffix="[[suffix]]"
-        no-grouping>
+        no-grouping="[[!useGrouping]]"
+        restart-on-options-changed="[[restartOnChange]]">
       </count-up>
 
       <div class="options">
         <div class="field">
           <label for="start">Start</label>
-          <input type="number" id="start" value="{{startValue::input}}">
+          <input type="number" id="start" value="{{startValue::input}}" disabled="[[fieldDisabled]]">
         </div>
 
         <div class="field">
           <label for="end">End</label>
-          <input type="number" id="end" value="{{endValue::input}}">
+          <input type="number" id="end" value="{{endValue::input}}" disabled="[[fieldDisabled]]">
         </div>
 
         <div class="field">
@@ -62,6 +66,24 @@
         </div>
       </div>
 
+      <div class="options">
+        <div class="check-field">
+          <input type="checkbox" id="cb" checked="{{cbOnEnd::change}}">
+          <label for="cb">Callback on end</label>
+        </div>
+
+        <div class="check-field">
+          <input type="checkbox" id="restart" checked="{{restartOnChange::change}}">
+          <label for="restart">Restart on change (<abbr title="What is this?" id="help">?</abbr>)</label>
+        </div>
+        <tool-tip target="help" position="top" class="small">By default the animation only starts when endValue changes. Setting restartOnOptionsChanged to true starts the animation when any of the configuration properties change.</tool-tip>
+
+        <div class="check-field">
+          <input type="checkbox" id="grouping" checked="{{useGrouping::change}}">
+          <label for="grouping">Use grouping</label>
+        </div>
+      </div>
+
       <button class="btn" on-click="animate">Start!</button>
 
       <paper-toast id="toast" class="fit-bottom" text="[[text]]" duration="5000"></paper-toast>
@@ -75,8 +97,15 @@
         demo.prefix = '';
         demo.suffix = '';
         demo.text = 'CountUp ended!';
+        demo.cbOnEnd = false;
+        demo.restartOnChange = false;
+        demo.useGrouping = false;
 
         var openToast = function() {
+          if (!demo.cbOnEnd) {
+            return null;
+          }
+
           if (Number(demo.endValue) === 0) {
             demo.text = 'The beginning of times';
           } else {
@@ -89,6 +118,7 @@
         demo.animate = function() {
           demo.$.ui.restart(openToast);
         };
+
       }(document.getElementById('demo')));
     </script>
   </div>
