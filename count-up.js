@@ -17,7 +17,7 @@
 
       _startValue: {
         type: Number,
-        computed: '_computeStartValue(_previousEndValue, startValue)'
+        computed: '_computeStartValue(_previousEndValue, startValue, updateTo)'
       },
 
       /**
@@ -26,6 +26,16 @@
       endValue: {
         type: Number,
         observer: '_endValueChanged'
+      },
+
+      /**
+       * Update the current value from previous updateTo value instead of counting from startValue to endValue.
+       * endValue has no effect when updateTo is used.
+       */
+      updateTo: {
+        type: Number,
+        value: null,
+        observer: '_updateToChanged'
       },
 
       /**
@@ -121,7 +131,7 @@
       _countup: {
         type: Function,
         observer: '_countupChanged',
-        computed: '_setCountUp(_startValue, endValue, decimals, duration, prefix, suffix, separator, noGrouping, easingFn, noEasing)'
+        computed: '_setCountUp(_startValue, endValue, decimals, duration, updateTo, prefix, suffix, separator, noGrouping, easingFn, noEasing)'
       }
     },
 
@@ -139,6 +149,10 @@
     },
 
     _countupChanged: function(countup) {
+      if (this.updateTo && !this._updated) {
+        this.start();
+      }
+
       if (this._updated && this.restartOnOptionsChanged) {
         this.start();
       }
@@ -186,14 +200,22 @@
       this._countup.pauseResume();
     },
 
-    _computeStartValue: function(previousEndValue, startValue) {
-      return !startValue ? previousEndValue : startValue;
+    _computeStartValue: function(previousEndValue, startValue, updateTo) {
+      if (updateTo) {
+        return !startValue ? previousEndValue : startValue;
+      } else {
+        return startValue;
+      }
+    },
+
+    _updateToChanged: function(updateTo) {
+      this.endValue = updateTo;
     },
 
     _endValueChanged: function(endValue, previousValue) {
       this._previousEndValue = previousValue !== undefined ? previousValue : 0;
 
-      if (!this.noAutostart) {
+      if (!this.noAutostart && this._countup) {
         this.start();
       }
     },
