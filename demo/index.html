@@ -34,7 +34,8 @@
         prefix="[[prefix]]"
         suffix="[[suffix]]"
         no-grouping="[[!useGrouping]]"
-        restart-on-options-changed="[[restartOnChange]]">
+        restart-on-options-changed="[[restartOnChange]]"
+        no-easing="[[noEasing]]">
       </count-up>
 
       <div class="options">
@@ -79,6 +80,11 @@
           <input type="checkbox" id="grouping" checked="{{useGrouping::change}}">
           <label for="grouping">Use grouping</label>
         </div>
+
+        <div class="check-field">
+          <input type="checkbox" id="easing" checked="{{noEasing::change}}">
+          <label for="easing">Disable easing</label>
+        </div>
       </div>
 
       <button class="btn" on-click="animate">Start!</button>
@@ -97,6 +103,7 @@
         demo.cbOnEnd = false;
         demo.restartOnChange = false;
         demo.useGrouping = false;
+        demo.noEasing = false;
 
         var openToast = function() {
           if (!demo.cbOnEnd) {

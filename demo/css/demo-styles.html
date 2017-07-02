@@ -78,7 +78,15 @@
     margin: 0 5px 20px;
   }
 
-  .field:last-child {
+  .check-field {
+    flex: 1 0 100%;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .field:last-child,
+  .check-field:last-child {
     margin-bottom: 0;
   }
 
@@ -132,6 +140,7 @@
     border-radius: 2px;
     line-height: 1.2;
     transition: background-color 0.2s, border-color 0.6s;
+    text-align: center;
   }
 
   .check-field input:checked ~ label::before {
@@ -186,6 +195,7 @@
       flex: 0 1 auto;
       margin: 0 10px 0;
     }
+    .check-field label { white-space: nowrap; }
     .field input { max-width: 120px; }
     count-up { font-size: 164px; }
   }
