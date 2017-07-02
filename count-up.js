@@ -52,7 +52,7 @@
       decimals: {
         type: Number,
         value: 0,
-        observer: '_decimalsChanged'
+        observer: '_optionChanged'
       },
 
       /**
@@ -84,7 +84,8 @@
        */
       noGrouping: {
         type: Boolean,
-        value: false
+        value: false,
+        observer: '_optionChanged'
       },
 
       /**
@@ -220,7 +221,7 @@
       }
     },
 
-    _decimalsChanged: function(value, previousValue) {
+    _optionChanged: function(value, previousValue) {
       if (previousValue !== undefined) {
         setTimeout(() => {
           this.update(this.endValue); // reevaluate decimals
