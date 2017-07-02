@@ -50,6 +50,12 @@
         assert.isFalse(spy.called);
       });
 
+      test('setting updateTo updates the count-up from previous updateTo value to current updateTo value', function() {
+        el.updateTo = 100;
+        el.updateTo = 200;
+        assert.equal(el._startValue, 100); // ugly and fragile :/
+      });
+
       suite('CountUp methods', function() {
         setup(function() {
           el.endValue = 100;

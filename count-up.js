@@ -132,7 +132,7 @@
       _countup: {
         type: Function,
         observer: '_countupChanged',
-        computed: '_setCountUp(_startValue, endValue, decimals, duration, updateTo, prefix, suffix, separator, noGrouping, easingFn, noEasing)'
+        computed: '_setCountUp(_startValue, endValue, decimals, duration, prefix, suffix, separator, noGrouping, easingFn, noEasing)'
       }
     },
 
@@ -154,10 +154,11 @@
         this.start();
       }
 
-      if (this._updated && this.restartOnOptionsChanged) {
+      if (this._updated && this.restartOnOptionsChanged && !this._noUpdate) {
         this.start();
       }
 
+      this._noUpdate = false;
       this._updated = true;
     },
 
@@ -210,13 +211,14 @@
     },
 
     _updateToChanged: function(updateTo) {
+      this._noUpdate = true; // prevent _setCountUp to be executed twice (_startValue and endValue will change)
       this.endValue = updateTo;
     },
 
     _endValueChanged: function(endValue, previousValue) {
       this._previousEndValue = previousValue !== undefined ? previousValue : 0;
 
-      if (!this.noAutostart && this._countup) {
+      if (!this.noAutostart && this._countup && !this.restartOnOptionsChanged) {
         this.start();
       }
     },
