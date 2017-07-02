@@ -12,7 +12,12 @@
        */
       startValue: {
         type: Number,
-        value: 0
+        value: null
+      },
+
+      _startValue: {
+        type: Number,
+        computed: '_computeStartValue(_previousEndValue, startValue)'
       },
 
       /**
@@ -60,7 +65,8 @@
        * Custom easing function for the animation.
        */
       easingFn: {
-        type: Function
+        type: Function,
+        value: null
       },
 
       /**
@@ -88,23 +94,34 @@
       },
 
       /**
-       * Number suffix.
+       * Optional text after the number.
        */
       suffix: {
-        type: String
+        type: String,
+        value: null
       },
 
       /**
-       * Number prefix.
+       * Optional text before the number.
        */
       prefix: {
         type: String,
-        observer: '_prefixChanged'
+        value: null
+      },
+
+      /**
+       * Set to true to restart the animation when a configuration property is changed.
+       * By default, only changing the endValue will animate the counter if noAutostart is not set to true.
+       */
+      restartOnOptionsChanged: {
+        type: Boolean,
+        value: false
       },
 
       _countup: {
         type: Function,
-        computed: '_setCountUp(startValue, endValue, decimals, duration)'
+        observer: '_countupChanged',
+        computed: '_setCountUp(_startValue, endValue, decimals, duration, prefix, suffix, separator, noGrouping, easingFn, noEasing)'
       }
     },
 
@@ -121,10 +138,12 @@
       });
     },
 
-    _endValueChanged: function(value) {
-      if (!this.noAutostart) {
+    _countupChanged: function(countup) {
+      if (this._updated && this.restartOnOptionsChanged) {
         this.start();
       }
+
+      this._updated = true;
     },
 
     /**
@@ -136,10 +155,19 @@
     },
 
     /**
+     * Restarts the animation.
+     * Shortcut for reset + start.
+     * @param {Object} cb Function to be executed at the end of the animation.
+     */
+    restart: function(cb) {
+      this.reset();
+      this.start(cb);
+    },
+
+    /**
      * Reset the count to the startValue.
      */
     reset: function() {
-      // this._updateCountup();
       this._countup.reset();
     },
 
@@ -158,28 +186,25 @@
       this._countup.pauseResume();
     },
 
-    /**
-     * Force _setCountup to be executed and return new CountUp
-     */
-    _updateCountup: function() {
-      var previousValue = this.startValue;
-      this.startValue = null;
-      this.startValue = previousValue;
+    _computeStartValue: function(previousEndValue, startValue) {
+      return !startValue ? previousEndValue : startValue;
+    },
+
+    _endValueChanged: function(endValue, previousValue) {
+      this._previousEndValue = previousValue !== undefined ? previousValue : 0;
+
+      if (!this.noAutostart) {
+        this.start();
+      }
     },
 
     _decimalsChanged: function(value, previousValue) {
       if (previousValue !== undefined) {
         setTimeout(() => {
-          this.update(this.value); // reevaluate decimals
+          this.update(this.endValue); // reevaluate decimals
         }, 1);
       }
-    },
-
-    /**
-     * This is a stupid observer that does nothing
-     * because prefix property if not set without an observer.
-     */
-    _prefixChanged: function(prefix) {}
+    }
   });
 
 }());
