@@ -9,7 +9,6 @@ For examples of the easing function, check out [CountUp's demo](http://inorganik
 ```html
 <custom-element-demo>
   <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="count-up.html">
     <style>
     count-up { font-family: sans-serif; font-size: 100px; }
@@ -19,7 +18,6 @@ For examples of the easing function, check out [CountUp's demo](http://inorganik
 </custom-element-demo>
 ```
 --> 
-
 ```html
 <count-up start-value="100" end-value="2000"></count-up>
 ```
