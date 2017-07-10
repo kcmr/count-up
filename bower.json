@@ -1,7 +1,15 @@
 {
   "name": "count-up",
-  "description": "Your component description",
-  "keywords": [],
+  "description": "A wrapper element for CountUp.js that displays an animated count",
+  "keywords": [
+    "countdown",
+    "countup",
+    "counter",
+    "animated",
+    "time",
+    "web-component",
+    "polymer"
+  ],
   "ignore": [],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.6.0",
