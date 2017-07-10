@@ -56,6 +56,27 @@
         assert.equal(el._startValue, 100); // ugly and fragile :/
       });
 
+      test('setting updateTo and startValue updates the count-up from startValue to updateTo value', function() {
+        el.startValue = 20;
+        el.updateTo = 100;
+        assert.equal(el._startValue, el.startValue);
+      });
+
+      test('setting restartOnOptionsChanged to true restarts the animation when a config property changes', function() {
+        sinon.spy(el, 'start');
+        el.restartOnOptionsChanged = true;
+        el.endValue = 100;
+        el.decimals = 1;
+        el.duration = 3;
+        el.noGrouping = true;
+        el.separator = '.';
+        el.decimal = '-';
+        el.suffix = 'suffix';
+        el.prefix = 'prefix';
+
+        assert.equal(el.start.callCount, 7);
+      });
+
       suite('CountUp methods', function() {
         setup(function() {
           el.endValue = 100;
@@ -67,6 +88,15 @@
             el[method]();
             assert.isTrue(el._countup[method].calledOnce, `component ${method} calls CountUp ${method}`);
           });
+        });
+
+        test('calling restart() calls reset() and start()', function() {
+          sinon.spy(el, 'reset');
+          sinon.spy(el, 'start');
+          el.endValue = 100;
+          el.restart();
+          assert.isTrue(el.reset.calledOnce);
+          assert.isTrue(el.start.calledOnce);
         });
       });
     });
