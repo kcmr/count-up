@@ -210,8 +210,13 @@
       }
     },
 
+    /**
+     * Call start() only the first time that updateTo is set (called by _countupChanged)
+     * because start() will be called by _endValueChanged everytime that endValue changes.
+     * _noUpdate is set to prevent calling start() twice.
+     */
     _updateToChanged: function(updateTo) {
-      this._noUpdate = true; // prevent _setCountUp to be executed twice (_startValue and endValue will change)
+      this._noUpdate = true;
       this.endValue = updateTo;
     },
 
