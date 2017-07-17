@@ -21,7 +21,7 @@
   <github-corner href="https://github.com/kcmr/count-up"></github-corner>
 
   <div class="wrapper">
-    <h1 class="title">&lt;count-up&gt;</h1>
+    <h1 class="title"><a href="https://github.com/kcmr/count-up">&lt;count-up&gt;</a></h1>
     <div class="desc">
       <p>A wrapper component for <a href="https://github.com/inorganik/countUp.js">CountUp.js</a> made with Polymer.</p>
     </div>
@@ -94,11 +94,16 @@
 
     <script>
       (function(demo) {
-        demo.startValue = 0;
-        demo.endValue = 2001;
-        demo.duration = 2.5;
+        var day = 24 * 60 * 60 * 1000;
+        var now = new Date();
+        var end = new Date('2017/07/31');
+        var diff = Math.round(Math.abs(end.getTime() - now.getTime()) / day);
+
+        demo.startValue = 365;
+        demo.endValue = diff;
+        demo.duration = 5;
         demo.prefix = '';
-        demo.suffix = '';
+        demo.suffix = 'days';
         demo.text = 'CountUp ended!';
         demo.cbOnEnd = false;
         demo.restartOnChange = true;
