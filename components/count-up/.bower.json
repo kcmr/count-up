@@ -1,0 +1,44 @@
+{
+  "name": "count-up",
+  "authors": [
+    "Kus Cámara <kus.camara@gmail.com>"
+  ],
+  "description": "A wrapper element for CountUp.js that displays an animated count",
+  "keywords": [
+    "countdown",
+    "countup",
+    "counter",
+    "animated",
+    "time",
+    "web-component",
+    "polymer"
+  ],
+  "ignore": [],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.6.0",
+    "countUp.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^4.0.0",
+    "github-corner": "^1.0.0",
+    "paper-toast": "^1.0.0"
+  },
+  "main": "count-up.html",
+  "license": "MIT",
+  "homepage": "https://github.com/kcmr/count-up/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kcmr/count-up.git"
+  },
+  "_release": "4cf27954e1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4cf27954e1769d4dad3fd9736132da360d05441d"
+  },
+  "_source": "https://github.com/kcmr/count-up.git",
+  "_target": "master",
+  "_originalSource": "https://github.com/kcmr/count-up.git",
+  "_direct": true
+}

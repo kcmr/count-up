@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../count-up.html">
+</head>
+
+<body>
+  <test-fixture id="default">
+    <template>
+      <count-up></count-up>
+    </template>
+  </test-fixture>
+
+  <script>
+    suite('<count-up>', function() {
+      var el;
+      var value;
+
+      setup(function() {
+        el = fixture('default');
+        value = el.$.value;
+        el.duration = 0.1;
+      });
+
+      test('setting endValue starts the count-up', function() {
+        sinon.spy(el, 'start');
+        el.endValue = 100;
+        assert.isTrue(el.start.calledOnce);
+      });
+
+      test('setting endValue displays the endValue after the count-up duration', function(done) {
+        el.noAutostart = true;
+        el.endValue = 100;
+        el.start(function() {
+          assert.equal(value.innerHTML, el.endValue);
+          done();
+        });
+      });
+
+      test('setting endValue should not display the endValue with noAutostart set to true', function() {
+        el.noAutostart = true;
+        el.endValue = 100;
+        var spy = sinon.spy(el, 'start');
+        assert.isFalse(spy.called);
+      });
+
+      test('setting updateTo updates the count-up from previous updateTo value to current updateTo value', function() {
+        el.updateTo = 100;
+        el.updateTo = 200;
+        assert.equal(el._startValue, 100); // ugly and fragile :/
+      });
+
+      test('setting updateTo and startValue updates the count-up from startValue to updateTo value', function() {
+        el.startValue = 20;
+        el.updateTo = 100;
+        assert.equal(el._startValue, el.startValue);
+      });
+
+      test('setting restartOnOptionsChanged to true restarts the animation when a config property changes', function() {
+        sinon.spy(el, 'start');
+        el.restartOnOptionsChanged = true;
+        el.endValue = 100;
+        el.decimals = 1;
+        el.duration = 3;
+        el.noGrouping = true;
+        el.separator = '.';
+        el.decimal = '-';
+        el.suffix = 'suffix';
+        el.prefix = 'prefix';
+
+        assert.equal(el.start.callCount, 7);
+      });
+
+      suite('CountUp methods', function() {
+        setup(function() {
+          el.endValue = 100;
+        });
+
+        test('component methods call CountUp methods', function() {
+          ['start', 'reset', 'update', 'pauseResume'].forEach(function(method) {
+            el._countup[method] = sinon.spy();
+            el[method]();
+            assert.isTrue(el._countup[method].calledOnce, `component ${method} calls CountUp ${method}`);
+          });
+        });
+
+        test('calling restart() calls reset() and start()', function() {
+          sinon.spy(el, 'reset');
+          sinon.spy(el, 'start');
+          el.endValue = 100;
+          el.restart();
+          assert.isTrue(el.reset.calledOnce);
+          assert.isTrue(el.start.calledOnce);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
