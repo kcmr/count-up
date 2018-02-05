@@ -12,88 +12,89 @@
   </script>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Share+Tech+Mono" rel="stylesheet">
-  <link rel="import" href="../../github-corner/github-corner.html">
   <link rel="import" href="../../paper-toast/paper-toast.html">
   <link rel="import" href="../count-up.html">
   <link rel="import" href="css/demo-styles.html">
 </head>
 <body unresolved>
-  <github-corner href="https://github.com/kcmr/count-up"></github-corner>
-
   <div class="wrapper">
     <h1 class="title"><a href="https://github.com/kcmr/count-up">&lt;count-up&gt;</a></h1>
     <div class="desc">
       <p>A wrapper component for <a href="https://github.com/inorganik/countUp.js">CountUp.js</a> made with Polymer.</p>
     </div>
 
-    <template is="dom-bind" id="demo">
-      <count-up id="ui"
-        start-value="[[startValue]]"
-        end-value="[[endValue]]"
-        duration="[[duration]]"
-        prefix="[[prefix]]"
-        suffix="[[suffix]]"
-        no-grouping="[[!useGrouping]]"
-        restart-on-options-changed="[[restartOnChange]]"
-        no-easing="[[noEasing]]">
-      </count-up>
+    <dom-bind>
+      <template is="dom-bind" id="demo">
+        <count-up id="ui"
+          start-value="[[startValue]]"
+          end-value="[[endValue]]"
+          duration="[[duration]]"
+          prefix="[[prefix]]"
+          suffix="[[suffix]]"
+          no-grouping="[[!useGrouping]]"
+          restart-on-options-changed="[[restartOnChange]]"
+          no-easing="[[noEasing]]">
+        </count-up>
 
-      <div class="options">
-        <div class="field">
-          <label for="start">Start</label>
-          <input type="number" id="start" value="{{startValue::input}}">
+        <div class="options">
+          <div class="field">
+            <label for="start">Start</label>
+            <input type="number" id="start" value="{{startValue::input}}">
+          </div>
+
+          <div class="field">
+            <label for="end">End</label>
+            <input type="number" id="end" value="{{endValue::input}}">
+          </div>
+
+          <div class="field">
+            <label for="duration">Duration</label>
+            <input type="number" id="duration" value="{{duration::input}}" min="0" step="0.5">
+          </div>
+
+          <div class="field">
+            <label for="prefix">Prefix</label>
+            <input type="text" id="prefix" value="{{prefix::input}}">
+          </div>
+
+          <div class="field">
+            <label for="suffix">Suffix</label>
+            <input type="text" id="suffix" value="{{suffix::input}}">
+          </div>
         </div>
 
-        <div class="field">
-          <label for="end">End</label>
-          <input type="number" id="end" value="{{endValue::input}}">
+        <div class="options">
+          <div class="check-field">
+            <input type="checkbox" id="cb" checked="{{cbOnEnd::change}}">
+            <label for="cb">Callback on end</label>
+          </div>
+
+          <div class="check-field">
+            <input type="checkbox" id="restart" checked="{{restartOnChange::change}}">
+            <label for="restart">Restart on change</label>
+          </div>
+
+          <div class="check-field">
+            <input type="checkbox" id="grouping" checked="{{useGrouping::change}}">
+            <label for="grouping">Use grouping</label>
+          </div>
+
+          <div class="check-field">
+            <input type="checkbox" id="easing" checked="{{noEasing::change}}">
+            <label for="easing">Disable easing</label>
+          </div>
         </div>
 
-        <div class="field">
-          <label for="duration">Duration</label>
-          <input type="number" id="duration" value="{{duration::input}}" min="0" step="0.5">
-        </div>
+        <button class="btn" on-click="animate">Start!</button>
 
-        <div class="field">
-          <label for="prefix">Prefix</label>
-          <input type="text" id="prefix" value="{{prefix::input}}">
-        </div>
-
-        <div class="field">
-          <label for="suffix">Suffix</label>
-          <input type="text" id="suffix" value="{{suffix::input}}">
-        </div>
-      </div>
-
-      <div class="options">
-        <div class="check-field">
-          <input type="checkbox" id="cb" checked="{{cbOnEnd::change}}">
-          <label for="cb">Callback on end</label>
-        </div>
-
-        <div class="check-field">
-          <input type="checkbox" id="restart" checked="{{restartOnChange::change}}">
-          <label for="restart">Restart on change</label>
-        </div>
-
-        <div class="check-field">
-          <input type="checkbox" id="grouping" checked="{{useGrouping::change}}">
-          <label for="grouping">Use grouping</label>
-        </div>
-
-        <div class="check-field">
-          <input type="checkbox" id="easing" checked="{{noEasing::change}}">
-          <label for="easing">Disable easing</label>
-        </div>
-      </div>
-
-      <button class="btn" on-click="animate">Start!</button>
-
-      <paper-toast id="toast" class="fit-bottom" text="[[text]]" duration="5000"></paper-toast>
-    </template>
+        <paper-toast id="toast" class="fit-bottom" text="[[text]]" duration="5000"></paper-toast>
+      </template>
+    </dom-bind>
 
     <script>
-      (function(demo) {
+      (function() {
+        var demo = Polymer.Element ? document.querySelector('dom-bind') : document.querySelector('#demo');
+
         var day = 24 * 60 * 60 * 1000;
         var now = new Date();
         var end = new Date('2017/07/31');
@@ -127,8 +128,7 @@
         demo.animate = function() {
           demo.$.ui.restart(openToast);
         };
-
-      }(document.getElementById('demo')));
+      }());
     </script>
   </div>
 </body>
